@@ -15,6 +15,7 @@ const headerTitleStrong = document.querySelector(".app__title-strong");
 const buttonFocus = document.querySelector(".app__card-button--foco");
 const buttonShortBreak = document.querySelector(".app__card-button--curto");
 const buttonLongBreak = document.querySelector(".app__card-button--longo");
+const buttons = document.querySelectorAll(".app__card-button");
 
 // timer
 const timer = document.querySelector(".app__card-timer");
@@ -38,21 +39,34 @@ function changeHeaderTitle(context) {
       headerTitleRegular.innerHTML = LONG_BREAK_TITLE.regular;
       headerTitleStrong.innerHTML = LONG_BREAK_TITLE.strong;
       break;
+    default:
   }
+}
+
+function removeActiveMarks() {
+  buttons.forEach(function (context) {
+    context.classList.remove("active");
+  });
 }
 
 function changeContext(context) {
   html.setAttribute("data-contexto", context);
   headerImage.setAttribute("src", `/imagens/${context}.png`);
   changeHeaderTitle(context);
+  removeActiveMarks(context);
 }
 
-buttonFocus.addEventListener("click", () => changeContext("foco"));
+buttonFocus.addEventListener("click", () => {
+  changeContext("foco");
+  buttonFocus.classList.add("active");
+});
 
-buttonShortBreak.addEventListener("click", () =>
-  changeContext("descanso-curto")
-);
+buttonShortBreak.addEventListener("click", () => {
+  changeContext("descanso-curto");
+  buttonShortBreak.classList.add("active");
+});
 
-buttonLongBreak.addEventListener("click", () =>
-  changeContext("descanso-longo")
-);
+buttonLongBreak.addEventListener("click", () => {
+  changeContext("descanso-longo");
+  buttonLongBreak.classList.add("active");
+});

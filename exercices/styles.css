@@ -1,0 +1,26 @@
+* {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+html {
+  min-height: 100vh;
+}
+
+.buttons-container {
+  display: flex;
+  gap: 50px;
+}
+
+.action-button {
+  width: 300px;
+  height: 200px;
+  border: none;
+  background-color: gainsboro;
+}
+
+.action-button-selected {
+  border-width: 5px;
+  background-color: green;
+  color: white;
+}

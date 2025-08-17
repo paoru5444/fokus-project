@@ -4,6 +4,9 @@ import {
   LONG_BREAK_TITLE,
 } from "./constants.js";
 
+const backtrack = new Audio("./sons/luna-rise-part-one.mp3");
+backtrack.loop = true;
+
 const html = document.querySelector("html");
 
 // header
@@ -16,6 +19,7 @@ const buttonFocus = document.querySelector(".app__card-button--foco");
 const buttonShortBreak = document.querySelector(".app__card-button--curto");
 const buttonLongBreak = document.querySelector(".app__card-button--longo");
 const buttons = document.querySelectorAll(".app__card-button");
+const buttonMusic = document.querySelector("#alternar-musica");
 
 // timer
 const timer = document.querySelector(".app__card-timer");
@@ -69,4 +73,12 @@ buttonShortBreak.addEventListener("click", () => {
 buttonLongBreak.addEventListener("click", () => {
   changeContext("descanso-longo");
   buttonLongBreak.classList.add("active");
+});
+
+buttonMusic.addEventListener("change", () => {
+  if (backtrack.paused) {
+    backtrack.play();
+  } else {
+    backtrack.pause();
+  }
 });

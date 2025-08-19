@@ -5,6 +5,10 @@ import {
 } from "./constants.js";
 
 const backtrack = new Audio("./sons/luna-rise-part-one.mp3");
+const beep = new Audio("./sons/beep.mp3");
+const play = new Audio("./sons/play.wav");
+const pause = new Audio("./sons/pause.mp3");
+
 backtrack.loop = true;
 
 const html = document.querySelector("html");
@@ -69,6 +73,7 @@ function pauseCountdown() {
 
 function countdown() {
   if (focusTime <= 0) {
+    beep.play();
     pauseCountdown();
     return;
   }
@@ -77,9 +82,12 @@ function countdown() {
 
 function startTimer() {
   if (interval) {
+    pause.play();
     pauseCountdown();
     return;
   }
+
+  play.play();
   interval = setInterval(countdown, 1000);
 }
 

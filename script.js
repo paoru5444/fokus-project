@@ -64,16 +64,22 @@ function changeContext(context) {
 
 function pauseCountdown() {
   clearInterval(interval);
+  interval = null;
 }
 
 function countdown() {
   if (focusTime <= 0) {
     pauseCountdown();
+    return;
   }
   focusTime -= 1;
 }
 
 function startTimer() {
+  if (interval) {
+    pauseCountdown();
+    return;
+  }
   interval = setInterval(countdown, 1000);
 }
 

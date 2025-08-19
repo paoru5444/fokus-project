@@ -20,12 +20,14 @@ const buttonShortBreak = document.querySelector(".app__card-button--curto");
 const buttonLongBreak = document.querySelector(".app__card-button--longo");
 const buttons = document.querySelectorAll(".app__card-button");
 const buttonMusic = document.querySelector("#alternar-musica");
+const buttonStartStopTimer = document.querySelector("#start-pause");
 
 // timer
 const timer = document.querySelector(".app__card-timer");
 const timerTrigger = document.querySelector(".app__card-primary-button");
+let interval = null;
 
-const focusTime = 1500;
+let focusTime = 1500;
 const shortBreakTime = 300;
 const shortLongTime = 900;
 
@@ -60,6 +62,21 @@ function changeContext(context) {
   removeActiveMarks(context);
 }
 
+function pauseCountdown() {
+  clearInterval(interval);
+}
+
+function countdown() {
+  if (focusTime <= 0) {
+    pauseCountdown();
+  }
+  focusTime -= 1;
+}
+
+function startTimer() {
+  interval = setInterval(countdown, 1000);
+}
+
 buttonFocus.addEventListener("click", () => {
   changeContext("foco");
   buttonFocus.classList.add("active");
@@ -82,3 +99,5 @@ buttonMusic.addEventListener("change", () => {
     backtrack.pause();
   }
 });
+
+buttonStartStopTimer.addEventListener("click", () => startTimer());

@@ -25,10 +25,11 @@ const buttonLongBreak = document.querySelector(".app__card-button--longo");
 const buttons = document.querySelectorAll(".app__card-button");
 const buttonMusic = document.querySelector("#alternar-musica");
 const buttonStartStopTimer = document.querySelector("#start-pause");
+const labelStartStopTimer = document.querySelector("#start-pause span");
+const labelStartStopImage = document.querySelector("#start-pause img");
 
 // timer
-const timer = document.querySelector(".app__card-timer");
-const timerTrigger = document.querySelector(".app__card-primary-button");
+const timer = document.querySelector("#timer");
 let interval = null;
 
 let focusTime = 1500;
@@ -78,15 +79,20 @@ function countdown() {
     return;
   }
   focusTime -= 1;
+  showTimer();
 }
 
 function startTimer() {
   if (interval) {
     pause.play();
+    labelStartStopTimer.textContent = "Começar";
+    labelStartStopImage.setAttribute("src", "./imagens/play_arrow.png");
     pauseCountdown();
     return;
   }
 
+  labelStartStopTimer.textContent = "Pausar";
+  labelStartStopImage.setAttribute("src", "./imagens/pause.png");
   play.play();
   interval = setInterval(countdown, 1000);
 }
@@ -115,3 +121,10 @@ buttonMusic.addEventListener("change", () => {
 });
 
 buttonStartStopTimer.addEventListener("click", () => startTimer());
+
+function showTimer() {
+  const time = focusTime;
+  timer.innerHTML = `${time}`;
+}
+
+showTimer();

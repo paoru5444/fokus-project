@@ -32,9 +32,10 @@ const labelStartStopImage = document.querySelector("#start-pause img");
 const timer = document.querySelector("#timer");
 let interval = null;
 
-let focusTime = 1500;
+const focusTime = 1500;
 const shortBreakTime = 300;
-const shortLongTime = 900;
+const longBreakTime = 900;
+let timeInMiliseconds = focusTime;
 
 function changeHeaderTitle(context) {
   switch (context) {
@@ -61,6 +62,8 @@ function removeActiveMarks() {
 }
 
 function changeContext(context) {
+  pauseCountdown();
+  showTimer();
   html.setAttribute("data-contexto", context);
   headerImage.setAttribute("src", `/imagens/${context}.png`);
   changeHeaderTitle(context);
@@ -68,17 +71,19 @@ function changeContext(context) {
 }
 
 function pauseCountdown() {
+  labelStartStopTimer.textContent = "Começar";
+  labelStartStopImage.setAttribute("src", "./imagens/play_arrow.png");
   clearInterval(interval);
   interval = null;
 }
 
 function countdown() {
-  if (focusTime <= 0) {
+  if (timeInMiliseconds <= 0) {
     beep.play();
     pauseCountdown();
     return;
   }
-  focusTime -= 1;
+  timeInMiliseconds -= 1;
   showTimer();
 }
 
@@ -98,16 +103,19 @@ function startTimer() {
 }
 
 buttonFocus.addEventListener("click", () => {
+  timeInMiliseconds = focusTime;
   changeContext("foco");
   buttonFocus.classList.add("active");
 });
 
 buttonShortBreak.addEventListener("click", () => {
+  timeInMiliseconds = shortBreakTime;
   changeContext("descanso-curto");
   buttonShortBreak.classList.add("active");
 });
 
 buttonLongBreak.addEventListener("click", () => {
+  timeInMiliseconds = longBreakTime;
   changeContext("descanso-longo");
   buttonLongBreak.classList.add("active");
 });
@@ -123,8 +131,12 @@ buttonMusic.addEventListener("change", () => {
 buttonStartStopTimer.addEventListener("click", () => startTimer());
 
 function showTimer() {
-  const time = focusTime;
-  timer.innerHTML = `${time}`;
+  const time = new Date(timeInMiliseconds * 1000);
+  const timeFormatted = time.toLocaleTimeString("pt-Br", {
+    minute: "2-digit",
+    second: "2-digit",
+  });
+  timer.innerHTML = `${timeFormatted}`;
 }
 
 showTimer();
